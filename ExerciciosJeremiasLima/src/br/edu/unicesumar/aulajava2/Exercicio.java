@@ -45,8 +45,6 @@ public class Exercicio {
 			throw new Exception("Não foi possível efetuar a operação!");
 		}
 	}
-
-	
 	
 	//2) Faça um método que copie o arquivo de uma pasta para outra, 
 	//	como se fosse um backup, antes de começar a leitura
@@ -120,7 +118,22 @@ public class Exercicio {
 		
 		return pessoas;
 	}
-
+	
+	// 6) Faça um método que filtre todos os últimos nome “Adams” e 
+	// do resultado deste filtro, exiba o mais novo.
+	public List<Pessoa> exercicioSeis(String pathArquivo, String filtro) throws Exception {
+		
+		existeArquivo(pathArquivo);
+		Path path = Paths.get(pathArquivo);
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		pessoas = returnObjectPessoa(path);		
+		pessoas = pessoas.stream().filter(x-> x.getLastName().equals(filtro)).collect(Collectors.toList());
+		pessoas.sort(Comparator.comparing(Pessoa::getBirthYear));
+		pessoas.forEach(p -> System.out.println(p.getFirstName() + ", " + p.getLastName() + ", " + p.getBirthYear()));
+		
+		return pessoas;		
+	}
 
 	private List<Pessoa> returnObjectPessoa(Path path) throws Exception {
 		
@@ -160,6 +173,10 @@ public class Exercicio {
         Map<Object,Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+
+
+
+	
 
 	
 
